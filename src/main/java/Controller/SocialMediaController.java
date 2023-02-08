@@ -9,6 +9,13 @@ import io.javalin.http.Context;
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
 public class SocialMediaController {
+    AccountService accService;
+	MessageService msgService;	
+
+	public SocialMediaController (){
+		this.accService = new AccountService();
+		this.msgService = new MessageService();
+	}   
     /**
      * In order for the test cases to work, you will need to write the endpoints in the startAPI() method, as the test
      * suite must receive a Javalin object from this method.
@@ -16,8 +23,17 @@ public class SocialMediaController {
      */
     public Javalin startAPI() {
         Javalin app = Javalin.create();
-        app.get("example-endpoint", this::exampleHandler);
-
+        app.post("/register", this::postNewAccount);
+		app.post("/login", this::postUserLogin);
+		app.post("/messages", this::postNewMessage);
+        app.get("/messages", this::getAllMessages);
+		app.get("/messages/{message_id}", this::getMessageUsingMessageID);
+		app.delete("/messages/{message_id}", this::deleteMessageUsingID);
+		app.patch("/messages/{message_id}", this::updateMessageUsingID);
+		app.get("/messages/{message_id}", this::allMessagesByAuser);
+        
+        app.start(8080);
+        
         return app;
     }
 
