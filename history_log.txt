@@ -1,7 +1,7 @@
-commit 1d821ab995ebb5cc64210e7779419c6e88c61ecd
+commit c1e159b88edc34677754ab568a35bf588575f898
 Author: sbrevatur <sberly1@yahoo.com>
-Date:   Thu Feb 9 01:30:35 2023 +0000
+Date:   Fri Feb 10 01:58:24 2023 +0000
 
-    My first commitment
+    Completed Registration Step
 
- 7 files changed, 76 insertions(+), 26 deletions(-)
+ 7 files changed, 95 insertions(+), 31 deletions(-)

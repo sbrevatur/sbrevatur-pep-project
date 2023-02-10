@@ -25,5 +25,9 @@ if(account.username ==""){
         return accountDAO.insertAccount(account);
     }
 
+public Account getAccount(String username, String password){
+    return accountDAO.loginUser(username, password);
+}
+
 }
 
