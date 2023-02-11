@@ -61,7 +61,7 @@ public class MessageService {
      *         unsuccessful. We do this to inform our application about successful/unsuccessful operations. (eg, the
      *         user should have some insight if they attempted to edit a nonexistent flight.)
      */
-    
+
         public Message updateMessage(int message_id, Message message){
 
              if(message.message_text ==""){
@@ -71,13 +71,14 @@ public class MessageService {
                 return null;
             }
            messageDAO.updateMessage(message_id, message);
-           return this.messageDAO.getMessageById(message_id);
-       
-               
+           return this.messageDAO.getMessageById(message_id);        
             
-    
-        }
-   
+
+        }  
+        
+public Message getMessageById(int message_id) {
+    return messageDAO.getMessageById(message_id);
+}
         
     }
 

@@ -29,7 +29,7 @@ public class SocialMediaController {
         app.post("/messages", this::postNewMessage);
         app.get("/messages", this::getAllMessages);
         app.patch("/messages/{message_id}", this::updateMessageUsingID);
-        //app.get("/messages/{message_id}", this::getMessageUsingMessageID);
+        app.get("/messages/{message_id}", this::getMessageUsingMessageID);
 		/*app.post("/login", this::postUserLogin);
 		app.post("/messages", this::postNewMessage);
         app.get("/messages", this::getAllMessages);
@@ -117,13 +117,13 @@ public class SocialMediaController {
      *            be available to this method automatically thanks to the app.put method.
      */
    
-     /*private void getMessageUsingMessageID(Context ctx) {
+     private void getMessageUsingMessageID(Context ctx) {
         
         Message messageRetrievedById = messageService.getMessageById(Integer.parseInt(ctx.pathParam("message_id")));
         if(messageRetrievedById == null){
             ctx.status(200);
-            break;
+            return;
         } 
             ctx.json(messageRetrievedById);
-            }*/
+            }
 }

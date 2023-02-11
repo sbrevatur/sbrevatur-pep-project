@@ -94,7 +94,45 @@ public class MessageDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+      
 
+    }
+
+
+    /**
+     * TODO: Retrieve a specific flight using its flight ID.
+     *
+     * You only need to change the sql String and set preparedStatement parameters.
+     *
+     * Remember that the format of a select where statement written as a Java String looks something like this:
+     * String sql = "select * from TableName where ColumnName = ?";
+     * The question marks will be filled in by the preparedStatement setString, setInt, etc methods. they follow
+     * this format, where the first argument identifies the question mark to be filled (left to right, starting
+     * from zero) and the second argument identifies the value to be used:
+     * preparedStatement.setInt(1,int1);
+     *
+     * @param id a flight ID.
+     */
+    public Message getMessageById(int message_id){
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            //Write SQL logic here
+            String sql = "select * from message where message_id = ?";
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            //write preparedStatement's setString and setInt methods here.
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Message message = new Message(rs.getInt("message_id"), rs.getInt("posted_by"),
+                        rs.getString("message_text"), rs.getLong("time_posted_epoch"));
+                return message;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 }
