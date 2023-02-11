@@ -84,6 +84,11 @@ public Message getMessageById(int message_id) {
 public Message removeMessageById(int message_id) {
     return messageDAO.removeMessageById(message_id);
 }
+
+
+public List<Message> getAllMessagesByUserAccountId(int account_id){
+    return this.messageDAO.getAllMessagesByUserAccountId(account_id);
+        }
         
     }
 

@@ -122,6 +122,8 @@ public class MessageDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             //write preparedStatement's setString and setInt methods here.
+            preparedStatement.setInt(1, message_id);
+
 
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -145,6 +147,8 @@ public class MessageDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             //write preparedStatement's setString and setInt methods here.
+            preparedStatement.setInt(1, message_id);
+
 
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -156,13 +160,13 @@ public class MessageDAO {
             } 
             if (messageToBeRemoved !=null) {
                 try {
-                    String deleteString = "delete from message where message_id = ?";
-                    PreparedStatement preparedDeleteStatement = connection.prepareStatement(deleteString);
+                    String deleteMessage = "delete from message where message_id = ?";
+                    PreparedStatement ps = connection.prepareStatement(deleteMessage);
 
-                    preparedDeleteStatement.setInt(1, message_id);
+                    ps.setInt(1, message_id);
 
-                    preparedDeleteStatement.executeUpdate();
-        return null;
+                    ps.executeUpdate();
+        return messageToBeRemoved;
                 } catch (SQLException err) {
                     System.out.println(err.getMessage());
                 }
@@ -176,6 +180,49 @@ public class MessageDAO {
             return null;
         
     }
+
+ /**
+     * TODO: Retrieve all flights following a particular flight path.
+     *
+     * you only need to change the sql string and set preparedStatement parameters.
+     *
+     * Remember that the format of a select where statement written as a Java String looks something like this:
+     * "select * from TableName where ColumnName1 = ? and ColumnName2 = ?;";
+     * The question marks will be filled in by the preparedStatement setString, setInt, etc methods. they follow
+     * this format, where the first argument identifies the question mark to be filled (left to right, starting
+     * from zero) and the second argument identifies the value to be used:
+     * preparedStatement.setString(1,"column 1 value");
+     * preparedStatement.setInt(2,123);
+     *
+     * @param departure_city the departing city.
+     * @param arrival_city the arriving city.
+     * @return all flights from departure_city to arrival_city.
+     */
+    public List<Message> getAllMessagesByUserAccountId(int account_id){
+        Connection connection = ConnectionUtil.getConnection();
+        List<Message> messages = new ArrayList<>();
+        try {
+            //Write SQL logic here
+            String sql = "select * from message where posted_by=?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            //write PreparedStatement setString and setInt methods here.
+            preparedStatement.setInt(1, account_id);
+
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Message message = new Message(rs.getInt("message_id"), rs.getInt("posted_by"),
+                        rs.getString("message_text"), rs. getLong("time_posted_epoch"));
+                messages.add(message);
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return messages;
+    }
+
 
 }
 

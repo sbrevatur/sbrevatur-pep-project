@@ -26,16 +26,15 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         app.post("/register", this::postNewAccount);
         app.post("/login", this::postUserLogin);
-        app.post("/messages", this::postNewMessage);
+       app.post("/messages", this::postNewMessage);
         app.get("/messages", this::getAllMessages);
         app.patch("/messages/{message_id}", this::updateMessageUsingID);
         app.get("/messages/{message_id}", this::getMessageUsingMessageID);
         app.delete("/messages/{message_id}", this::deleteMessageUsingID);
-		/*app.post("/login", this::postUserLogin);
-		app.post("/messages", this::postNewMessage);
-        app.get("/messages", this::getAllMessages);
-		app.get("/messages/{message_id}", this::getMessageUsingMessageID);
-		*/
+        app.get("/accounts/{account_id}/messages", this::getAllMessagesByUser);
+              
+		
+		
              
                 return app;
     }
@@ -135,5 +134,18 @@ public class SocialMediaController {
         }
         ctx.json(removedMessage);
     }
+
+
+        /**
+     * Handler to retrieve all flights departing from a particular city and arriving at another city.
+     * both cities are retrieved from the path. There is no need to change anything in this method.
+     * @param ctx the context object handles information HTTP requests and generates responses within Javalin. It will
+     *            be available to this method automatically thanks to the app.put method.
+     */
+    private void getAllMessagesByUser(Context ctx) {
+        List<Message> messages = messageService.getAllMessagesByUserAccountId(Integer.parseInt((ctx.pathParam("account_id"))));
+        ctx.json(messages);
+        //ctx.json(messageService.getAllMessagesByUserAccountId(ctx.pathParam("account_id")));
+    } 
 
 }
