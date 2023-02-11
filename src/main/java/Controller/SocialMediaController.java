@@ -28,6 +28,8 @@ public class SocialMediaController {
         app.post("/login", this::postUserLogin);
         app.post("/messages", this::postNewMessage);
         app.get("/messages", this::getAllMessages);
+        app.patch("/messages/{message_id}", this::updateMessageUsingID);
+        //app.get("/messages/{message_id}", this::getMessageUsingMessageID);
 		/*app.post("/login", this::postUserLogin);
 		app.post("/messages", this::postNewMessage);
         app.get("/messages", this::getAllMessages);
@@ -81,5 +83,47 @@ public class SocialMediaController {
         ctx.json(messages);
     }
 
-}
 
+     /**
+     * Handler to update a flight.
+     * The Jackson ObjectMapper will automatically convert the JSON of the POST request into a Flight object.
+     * to conform to RESTful standards, the flight that is being updated is identified from the path parameter,
+     * but the information required to update a flight is retrieved from the request body.
+     * If flightService returns a null flight (meaning updating a flight was unsuccessful), the API will return a 400
+     * status (client error). There is no need to change anything in this method.
+     *
+     * @param ctx the context object handles information HTTP requests and generates responses within Javalin. It will
+     *            be available to this method automatically thanks to the app.put method.
+     * @throws JsonProcessingException will be thrown if there is an issue converting JSON into an object.
+     */
+    private void updateMessageUsingID(Context ctx) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(ctx.body(), Message.class);
+        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        Message updatedMessage = messageService.updateMessage(message_id, message);
+        System.out.println(updatedMessage);
+        if(updatedMessage == null){
+            ctx.status(400);
+        }else{
+            ctx.json(mapper.writeValueAsString(updatedMessage));
+        }
+
+    }
+
+    /**
+     * Handler to retrieve all flights departing from a particular city and arriving at another city.
+     * both cities are retrieved from the path. There is no need to change anything in this method.
+     * @param ctx the context object handles information HTTP requests and generates responses within Javalin. It will
+     *            be available to this method automatically thanks to the app.put method.
+     */
+   
+     /*private void getMessageUsingMessageID(Context ctx) {
+        
+        Message messageRetrievedById = messageService.getMessageById(Integer.parseInt(ctx.pathParam("message_id")));
+        if(messageRetrievedById == null){
+            ctx.status(200);
+            break;
+        } 
+            ctx.json(messageRetrievedById);
+            }*/
+}
