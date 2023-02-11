@@ -71,13 +71,18 @@ public class MessageService {
                 return null;
             }
            messageDAO.updateMessage(message_id, message);
-           return this.messageDAO.getMessageById(message_id);        
+           return this.messageDAO.getMessageById(message_id);      
             
 
         }  
         
 public Message getMessageById(int message_id) {
     return messageDAO.getMessageById(message_id);
+}
+
+        
+public Message removeMessageById(int message_id) {
+    return messageDAO.removeMessageById(message_id);
 }
         
     }
