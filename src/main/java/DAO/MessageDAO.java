@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import DAO.MessageDAO;
 
@@ -38,4 +40,27 @@ public class MessageDAO {
         }
         return null;
     }
+
+
+    /*TODO: retrieve all authors from the Author table.
+    You only need to change the sql String.
+    @return all Authors.
+    */
+   public List<Message> retrieveAllMessages(){
+       Connection connection = ConnectionUtil.getConnection();
+       List<Message> allMessages = new ArrayList<>();
+       try {
+           //Write SQL logic here
+           String sql = "select * from message";
+           PreparedStatement preparedStatement = connection.prepareStatement(sql);
+           ResultSet rs = preparedStatement.executeQuery();
+           while(rs.next()){
+               Message message = new Message(rs.getInt("message_id"), rs.getInt("posted_by"), rs.getString("message_text"), rs.getLong("time_posted_epoch"));
+               allMessages.add(message);
+           }
+       }catch(SQLException e){
+           System.out.println(e.getMessage());
+       }
+       return allMessages;
+   }
 }

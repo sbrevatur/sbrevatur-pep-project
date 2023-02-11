@@ -1,5 +1,7 @@
 package Service;
 
+import java.util.List;
+
 import DAO.MessageDAO;
 import Model.Message;
 
@@ -27,6 +29,9 @@ public class MessageService {
      *
      * @return all authors
      */
+    public List<Message> retrieveAllMessages() {
+        return messageDAO.retrieveAllMessages();
+    }
    
     /**
      * TODO: Use the AuthorDAO to persist an author. The given Author will not have an id provided.

@@ -1,5 +1,7 @@
 package Controller;
 
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -25,6 +27,7 @@ public class SocialMediaController {
         app.post("/register", this::postNewAccount);
         app.post("/login", this::postUserLogin);
         app.post("/messages", this::postNewMessage);
+        app.get("/messages", this::getAllMessages);
 		/*app.post("/login", this::postUserLogin);
 		app.post("/messages", this::postNewMessage);
         app.get("/messages", this::getAllMessages);
@@ -72,5 +75,11 @@ public class SocialMediaController {
             ctx.status(400);
         }
     }
+    
+    public void getAllMessages(Context ctx){
+        List<Message> messages = messageService.retrieveAllMessages();
+        ctx.json(messages);
+    }
+
 }
 
