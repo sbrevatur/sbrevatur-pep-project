@@ -35,7 +35,7 @@ public class AccountDAO {
         return null;
 
     }
-    public Account insertAccount(String username, String password){
+    public Account loginUser(String username, String password){
         Connection connection = ConnectionUtil.getConnection();
         try {
             //Write SQL logic here
