@@ -49,7 +49,35 @@ public class MessageService {
             return messageDAO.insertMessage(message);
         }
 
-        
+           /**
+     * TODO: Use the FlightDAO to update an existing flight from the database.
+     * You should first check that the flight ID already exists. To do this, you could use an if statement that checks
+     * if flightDAO.getFlightById returns null for the flight's ID, as this would indicate that the flight id does not
+     * exist.
+     *
+     * @param flight_id the ID of the flight to be modified.
+     * @param flight an object containing all data that should replace the values contained by the existing flight_id.
+     * @return the newly updated flight if the update operation was successful. Return null if the update operation was
+     *         unsuccessful. We do this to inform our application about successful/unsuccessful operations. (eg, the
+     *         user should have some insight if they attempted to edit a nonexistent flight.)
+     */
+    
+        public Message updateMessage(int message_id, Message message){
+
+             if(message.message_text ==""){
+            return null;
+        } else if (
+            message.message_text.length() > 250){
+                return null;
+            }
+           messageDAO.updateMessage(message_id, message);
+           return this.messageDAO.getMessageById(message_id);
+       
+               
+            
+    
+        }
+   
         
     }
 

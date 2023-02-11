@@ -63,4 +63,38 @@ public class MessageDAO {
        }
        return allMessages;
    }
+
+/**
+     * TODO: Update the flight identified by the flight id to the values contained in the flight object.
+     *
+     * You only need to change the sql String and set preparedStatement parameters.
+     *
+     * Remember that the format of an update PreparedStatement written as a Java String looks something like this:
+     * String sql = "update TableName set ColumnName1=?, ColumnName2=? where ColumnName3 = ?;";
+     * The question marks will be filled in by the preparedStatement setString, setInt, etc methods. they follow
+     * this format, where the first argument identifies the question mark to be filled (left to right, starting
+     * from zero) and the second argument identifies the value to be used:
+     * preparedStatement.setString(1,string1);
+     * preparedStatement.setString(2,string2);
+     * preparedStatement.setInt(3,int1);
+     *
+     * @param id a flight ID.
+     * @param flight a flight object.
+     */
+    public void updateMessage(int message_id, Message message){
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            String sql = "update message set message_text=? where message_id=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, message.message_text);
+            preparedStatement.setInt(2, message_id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
 }
